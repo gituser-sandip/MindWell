@@ -41,6 +41,8 @@
             <ul class="nav-menu">
                 <li><a href="${pageContext.request.contextPath}/admin" class="nav-link active">Admin</a></li>
                 <li><a href="${pageContext.request.contextPath}/home" class="nav-link">Site</a></li>
+                <li><a href="${pageContext.request.contextPath}/profile" class="nav-link">Profile</a></li>
+                <li><a href="${pageContext.request.contextPath}/settings" class="nav-link nav-icon-link" title="Settings" aria-label="Settings"><i class="fas fa-cog"></i></a></li>
                 <li><a href="${pageContext.request.contextPath}/dashboard" class="nav-link">Dashboard</a></li>
             </ul>
             <div class="nav-buttons">
@@ -48,8 +50,17 @@
                     <i class="fas fa-sign-out-alt"></i> Logout
                 </a>
             </div>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
         </div>
     </nav>
+    <a href="${pageContext.request.contextPath}/home#emergency" class="floating-emergency-help" aria-label="Emergency help">
+        <i class="fas fa-phone-alt"></i>
+        <span>Emergency</span>
+    </a>
 
     <main class="dashboard-main admin-main">
         <div class="dashboard-header">
@@ -246,5 +257,16 @@
             </div>
         </section>
     </main>
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        if (hamburger) {
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+        }
+    </script>
 </body>
 </html>

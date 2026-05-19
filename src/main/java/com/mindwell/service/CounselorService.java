@@ -70,6 +70,42 @@ public class CounselorService {
         }
     }
 
+    public CounselorModel getCounselorByUserId(int userId) {
+        String sql = "SELECT c.*, u.full_name, u.email, u.phone FROM counselors c JOIN users u ON c.user_id = u.user_id WHERE c.user_id = ?";
+
+        try (Connection conn = DBConfig.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, userId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return mapCounselor(rs);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean updateCounselorProfile(CounselorModel counselor) {
+        String sql = "UPDATE counselors SET specialization = ?, experience_years = ?, bio = ?, consultation_fee = ? WHERE user_id = ?";
+
+        try (Connection conn = DBConfig.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, counselor.getSpecialization());
+            pstmt.setInt(2, counselor.getExperienceYears());
+            pstmt.setString(3, counselor.getBio());
+            pstmt.setDouble(4, counselor.getConsultationFee());
+            pstmt.setInt(5, counselor.getUserId());
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     private CounselorModel mapCounselor(ResultSet rs) throws SQLException {
         CounselorModel counselor = new CounselorModel();
         counselor.setCounselorId(rs.getInt("counselor_id"));

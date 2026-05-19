@@ -25,11 +25,10 @@
                 <li><a href="${pageContext.request.contextPath}/home#professionals" class="nav-link">Professionals</a></li>
                 <li><a href="${pageContext.request.contextPath}/home#resources" class="nav-link">Resources</a></li>
                 <li><a href="${pageContext.request.contextPath}/home#about" class="nav-link">About Us</a></li>
-                <li><a href="${pageContext.request.contextPath}/home#emergency" class="nav-link emergency-link">Emergency Help</a></li>
             </ul>
             <div class="nav-buttons">
                 <a href="${pageContext.request.contextPath}/login" class="btn-login-nav">Login</a>
-                <a href="${pageContext.request.contextPath}/register" class="btn-register-nav active">Register</a>
+                <a href="${pageContext.request.contextPath}/register" class="btn-register-nav active">Sign Up</a>
             </div>
             <div class="hamburger">
                 <span class="bar"></span>
@@ -38,6 +37,10 @@
             </div>
         </div>
     </nav>
+    <a href="${pageContext.request.contextPath}/home#emergency" class="floating-emergency-help" aria-label="Emergency help">
+        <i class="fas fa-phone-alt"></i>
+        <span>Emergency</span>
+    </a>
 
     <!-- Registration Form -->
     <main class="auth-container">

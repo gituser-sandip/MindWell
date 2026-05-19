@@ -23,7 +23,6 @@
                 <li><a href="#professionals" class="nav-link">Professionals</a></li>
                 <li><a href="#resources" class="nav-link">Resources</a></li>
                 <li><a href="#about" class="nav-link">About Us</a></li>
-                <li><a href="#emergency" class="nav-link emergency-link">Emergency Help</a></li>
             </ul>
             <%
                 UserModel currentUser = (UserModel) session.getAttribute("user");
@@ -38,12 +37,16 @@
                     <a href="${pageContext.request.contextPath}/<%= isAdmin ? "admin" : "dashboard" %>" class="btn-login-nav">
                         <%= isAdmin ? "Admin" : "Dashboard" %>
                     </a>
+                    <a href="${pageContext.request.contextPath}/profile" class="btn-login-nav">Profile</a>
+                    <a href="${pageContext.request.contextPath}/settings" class="btn-login-nav nav-icon-link" title="Settings" aria-label="Settings">
+                        <i class="fas fa-cog"></i>
+                    </a>
                     <a href="${pageContext.request.contextPath}/logout" class="btn-logout">
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </a>
                 <% } else { %>
                     <a href="${pageContext.request.contextPath}/login" class="btn-login-nav">Login</a>
-                    <a href="${pageContext.request.contextPath}/register" class="btn-register-nav">Register</a>
+                    <a href="${pageContext.request.contextPath}/register" class="btn-register-nav">Sign Up</a>
                 <% } %>
             </div>
             <div class="hamburger">
@@ -53,6 +56,10 @@
             </div>
         </div>
     </nav>
+    <a href="#emergency" class="floating-emergency-help" aria-label="Emergency help">
+        <i class="fas fa-phone-alt"></i>
+        <span>Emergency</span>
+    </a>
 
     <!-- Hero Section -->
     <section class="hero" id="home">

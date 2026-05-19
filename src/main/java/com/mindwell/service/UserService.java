@@ -130,6 +130,64 @@ public class UserService {
         return users;
     }
 
+    public UserModel getUserById(int userId) {
+        String sql = "SELECT * FROM users WHERE user_id = ?";
+
+        try (Connection conn = DBConfig.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, userId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    UserModel user = new UserModel();
+                    mapUser(rs, user);
+                    return user;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean updateProfile(UserModel user) {
+        String sql = "UPDATE users SET full_name = ?, phone = ?, city = ? WHERE user_id = ?";
+
+        try (Connection conn = DBConfig.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, user.getFullName());
+            pstmt.setString(2, user.getPhone());
+            pstmt.setString(3, user.getCity());
+            pstmt.setInt(4, user.getUserId());
+            return pstmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean changePassword(int userId, String currentPassword, String newPassword) {
+        String sql = "SELECT password FROM users WHERE user_id = ?";
+
+        try (Connection conn = DBConfig.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, userId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (!rs.next() || !isValidPassword(currentPassword, rs.getString("password"), userId)) {
+                    return false;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        updatePasswordHash(userId, newPassword);
+        return true;
+    }
+
     public boolean approveUser(int userId) {
         String sql = "UPDATE users SET account_status = 'approved', user_type = requested_user_type WHERE user_id = ? AND account_status = 'pending'";
 

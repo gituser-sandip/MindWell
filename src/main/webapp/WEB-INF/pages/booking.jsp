@@ -26,7 +26,8 @@
                 <li><a href="${pageContext.request.contextPath}/home" class="nav-link">Home</a></li>
                 <li><a href="${pageContext.request.contextPath}/booking" class="nav-link active">Book Session</a></li>
                 <li><a href="${pageContext.request.contextPath}/dashboard" class="nav-link">Dashboard</a></li>
-                <li><a href="${pageContext.request.contextPath}/home#emergency" class="nav-link emergency-link">Emergency Help</a></li>
+                <li><a href="${pageContext.request.contextPath}/profile" class="nav-link">Profile</a></li>
+                <li><a href="${pageContext.request.contextPath}/settings" class="nav-link nav-icon-link" title="Settings" aria-label="Settings"><i class="fas fa-cog"></i></a></li>
             </ul>
             <div class="nav-buttons">
                 <span class="user-greeting">
@@ -44,6 +45,10 @@
             </div>
         </div>
     </nav>
+    <a href="${pageContext.request.contextPath}/home#emergency" class="floating-emergency-help" aria-label="Emergency help">
+        <i class="fas fa-phone-alt"></i>
+        <span>Emergency</span>
+    </a>
 
     <!-- Main Booking Content -->
     <main class="booking-main">
