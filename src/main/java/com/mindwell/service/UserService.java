@@ -15,8 +15,10 @@ public class UserService {
     }
 
     public boolean registerUser(UserModel user, CounselorModel counselorRequest) {
-        String userSql = "INSERT INTO users (full_name, email, password, phone, city, user_type, requested_user_type, account_status) VALUES (?, ?, ?, ?, ?, 'user', ?, 'pending')";
+        String userSql = "INSERT INTO users (full_name, email, password, phone, city, user_type, requested_user_type, account_status) VALUES (?, ?, ?, ?, ?, 'user', ?, ?)";
         String counselorSql = "INSERT INTO counselors (user_id, specialization, experience_years, bio, consultation_fee, is_available, is_verified) VALUES (?, ?, ?, ?, ?, FALSE, FALSE)";
+        String requestedRole = normalizeRequestedRole(user.getRequestedUserType());
+        String accountStatus = "counselor".equals(requestedRole) ? "pending" : "approved";
         
         try (Connection conn = DBConfig.getConnection()) {
             conn.setAutoCommit(false);
@@ -27,7 +29,8 @@ public class UserService {
                 pstmt.setString(3, PasswordUtil.hashPassword(user.getPassword()));
                 pstmt.setString(4, user.getPhone());
                 pstmt.setString(5, user.getCity());
-                pstmt.setString(6, normalizeRequestedRole(user.getRequestedUserType()));
+                pstmt.setString(6, requestedRole);
+                pstmt.setString(7, accountStatus);
                 
                 if (pstmt.executeUpdate() == 0) {
                     conn.rollback();
@@ -43,7 +46,7 @@ public class UserService {
                     userId = keys.getInt(1);
                 }
 
-                if ("counselor".equals(normalizeRequestedRole(user.getRequestedUserType())) && counselorRequest != null) {
+                if ("counselor".equals(requestedRole) && counselorRequest != null) {
                     try (PreparedStatement counselorStmt = conn.prepareStatement(counselorSql)) {
                         counselorStmt.setInt(1, userId);
                         counselorStmt.setString(2, counselorRequest.getSpecialization());
@@ -73,7 +76,7 @@ public class UserService {
             ResultSet rs = pstmt.executeQuery();
             
             if (rs.next() && isValidPassword(password, rs.getString("password"), rs.getInt("user_id"))
-                    && "approved".equals(rs.getString("account_status"))) {
+                    && canLogin(rs)) {
                 UserModel user = new UserModel();
                 mapUser(rs, user);
                 return user;
@@ -82,6 +85,15 @@ public class UserService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private boolean canLogin(ResultSet rs) throws SQLException {
+        String status = rs.getString("account_status");
+        String requestedRole = rs.getString("requested_user_type");
+        if ("rejected".equals(status) || "disabled".equals(status)) {
+            return false;
+        }
+        return "approved".equals(status) || "user".equals(requestedRole);
     }
 
     private boolean isValidPassword(String plainPassword, String storedPassword, int userId) {

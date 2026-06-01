@@ -33,5 +33,14 @@
     
     <build>
         <finalName>mindwell-nepal</finalName>
+        <resources>
+            <resource>
+                <directory>database</directory>
+                <targetPath>database</targetPath>
+                <includes>
+                    <include>mindwell_nepal.sql</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
 </project>

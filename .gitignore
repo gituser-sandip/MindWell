@@ -1,0 +1,9 @@
+target/
+build/
+
+# Local deployment secrets
+.env
+.render.env.ps1
+
+# Downloaded local tools
+tools/render/

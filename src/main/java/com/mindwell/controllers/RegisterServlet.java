@@ -82,7 +82,11 @@ public class RegisterServlet extends HttpServlet {
         boolean isRegistered = userService.registerUser(user, counselorRequest);
         
         if (isRegistered) {
-            request.setAttribute("successMessage", "Registration request submitted. An admin will review your account before login.");
+            if ("counselor".equals(user.getRequestedUserType())) {
+                request.setAttribute("successMessage", "Counselor registration submitted. An admin will review your profile before counselor login.");
+            } else {
+                request.setAttribute("successMessage", "Registration successful. You can log in now.");
+            }
             request.getRequestDispatcher("/WEB-INF/pages/login.jsp").forward(request, response);
         } else {
             request.setAttribute("errorMessage", "Registration failed. Email might already exist.");

@@ -96,28 +96,30 @@
             </div>
             <div class="resources-grid">
                 <article class="resource-card">
-                    <div class="resource-category relationships">
-                        <i class="fas fa-users"></i> RELATIONSHIPS
+                    <div class="resource-category selfcare">
+                        <i class="fas fa-wind"></i> ANXIETY
                     </div>
-                    <h3>Building Stronger Community Bonds</h3>
-                    <p>How family, friends, and community support can help recovery feel less lonely.</p>
+                    <h3>Calming Anxiety During Study or Work Pressure</h3>
+                    <p>Anxiety can feel like fast thoughts, tight breathing, stomach discomfort, or fear that something bad will happen. Start by slowing the body, then handle one task at a time.</p>
                     <ul class="resource-list">
-                        <li>Choose one trusted person for regular check-ins.</li>
-                        <li>Be specific about what support helps you.</li>
-                        <li>Respect privacy while accepting care.</li>
+                        <li>Use 4-4-6 breathing: inhale 4, hold 4, exhale 6.</li>
+                        <li>Break work into one 20-minute task.</li>
+                        <li>Reduce caffeine if it increases panic symptoms.</li>
+                        <li>Talk to a counselor if anxiety affects sleep, study, work, or relationships.</li>
                     </ul>
                 </article>
 
                 <article class="resource-card">
-                    <div class="resource-category selfcare">
-                        <i class="fas fa-spa"></i> SELF-CARE
+                    <div class="resource-category mindfulness">
+                        <i class="fas fa-cloud-rain"></i> LOW MOOD
                     </div>
-                    <h3>5 Daily Rituals for Inner Peace</h3>
-                    <p>Small practices that support emotional regulation without needing special equipment.</p>
+                    <h3>What to Do When You Feel Low for Many Days</h3>
+                    <p>Low mood is not laziness. It can reduce energy, interest, appetite, sleep, and hope. Gentle routine and support can help you move through it safely.</p>
                     <ul class="resource-list">
-                        <li>Three slow breaths before checking your phone.</li>
-                        <li>A ten-minute walk after one meal.</li>
-                        <li>Write one worry and one next step.</li>
+                        <li>Keep a simple wake-up and sleep time.</li>
+                        <li>Eat something small even when appetite is low.</li>
+                        <li>Spend ten minutes in sunlight or fresh air.</li>
+                        <li>Ask for urgent help if you feel unsafe or think about self-harm.</li>
                     </ul>
                 </article>
 
@@ -126,24 +128,54 @@
                         <i class="fas fa-comments"></i> THERAPY
                     </div>
                     <h3>What to Expect in Your First Session</h3>
-                    <p>Your counselor will ask about your concerns, history, safety, and goals. You do not have to explain everything perfectly.</p>
+                    <p>Your first counseling session is a conversation, not an exam. The counselor will try to understand your concern, background, safety, and goals.</p>
                     <ul class="resource-list">
                         <li>Bring questions about confidentiality.</li>
                         <li>Share only what feels manageable.</li>
                         <li>Ask how progress will be tracked.</li>
+                        <li>Tell the counselor if a suggestion does not fit your culture, family, or routine.</li>
                     </ul>
                 </article>
 
                 <article class="resource-card featured">
-                    <div class="resource-category mindfulness">
-                        <i class="fas fa-brain"></i> MINDFULNESS
+                    <div class="resource-category relationships">
+                        <i class="fas fa-users"></i> FAMILY
                     </div>
-                    <h3>Understanding Anxiety in a Modern Nepal</h3>
-                    <p>Changing work, study, family, and migration pressures can affect the body and mind. Anxiety is treatable, and support can start with small grounding steps.</p>
+                    <h3>Talking About Mental Health With Family</h3>
+                    <p>In many families, mental health is hard to discuss. A calm, simple explanation works better than trying to convince everyone at once.</p>
                     <ul class="resource-list">
-                        <li>Name five things you can see.</li>
-                        <li>Relax your jaw and shoulders.</li>
-                        <li>Book support if worry interrupts daily life.</li>
+                        <li>Choose one trusted family member first.</li>
+                        <li>Use clear words: "I am struggling and need support."</li>
+                        <li>Explain what helps: listening, privacy, or help booking counseling.</li>
+                        <li>Avoid arguing when someone reacts with confusion at first.</li>
+                    </ul>
+                </article>
+
+                <article class="resource-card">
+                    <div class="resource-category selfcare">
+                        <i class="fas fa-bed"></i> SLEEP
+                    </div>
+                    <h3>Improving Sleep When Your Mind Feels Busy</h3>
+                    <p>Sleep problems often become worse when we force ourselves to sleep. A regular wind-down routine teaches the body that night is safe.</p>
+                    <ul class="resource-list">
+                        <li>Keep phones away for the last 30 minutes.</li>
+                        <li>Write tomorrow's worries on paper before bed.</li>
+                        <li>Use the bed mainly for sleep, not scrolling.</li>
+                        <li>Contact a professional if poor sleep continues for weeks.</li>
+                    </ul>
+                </article>
+
+                <article class="resource-card">
+                    <div class="resource-category therapy">
+                        <i class="fas fa-hands-helping"></i> CRISIS
+                    </div>
+                    <h3>Helping a Friend Who May Be in Crisis</h3>
+                    <p>If someone talks about self-harm, hopelessness, or disappearing, take it seriously. You do not need perfect words; staying present matters.</p>
+                    <ul class="resource-list">
+                        <li>Ask directly if they feel unsafe.</li>
+                        <li>Stay with them or connect them with a trusted adult or emergency support.</li>
+                        <li>Remove immediate danger if possible.</li>
+                        <li>Do not promise secrecy when safety is at risk.</li>
                     </ul>
                 </article>
             </div>
