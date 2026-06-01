@@ -16,8 +16,8 @@ public class BookingService {
             
             pstmt.setInt(1, booking.getUserId());
             pstmt.setInt(2, booking.getCounselorId());
-            pstmt.setString(3, booking.getBookingDate());
-            pstmt.setString(4, booking.getBookingTime());
+            pstmt.setDate(3, Date.valueOf(booking.getBookingDate()));
+            pstmt.setTime(4, Time.valueOf(booking.getBookingTime()));
             pstmt.setString(5, booking.getMessage());
             
             return pstmt.executeUpdate() > 0;

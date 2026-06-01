@@ -15,11 +15,8 @@ public class DBConfig {
     private static final String DEFAULT_PASSWORD = "";
     
     static {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        loadDriver("com.mysql.cj.jdbc.Driver");
+        loadDriver("org.postgresql.Driver");
     }
     
     public static Connection getConnection() throws SQLException {
@@ -31,8 +28,22 @@ public class DBConfig {
 
     private static DatabaseSettings getDatabaseSettings() {
         String url = getConfigValue("DB_URL", "db.url", null);
+        if (url == null) {
+            url = getConfigValue("DATABASE_URL", "database.url", null);
+        }
         String username = getConfigValue("DB_USERNAME", "db.username", null);
         String password = getConfigValue("DB_PASSWORD", "db.password", null);
+
+        DatabaseUrl databaseUrl = parseDatabaseUrl(url);
+        if (databaseUrl != null) {
+            url = databaseUrl.jdbcUrl;
+            if (username == null) {
+                username = databaseUrl.username;
+            }
+            if (password == null) {
+                password = databaseUrl.password;
+            }
+        }
 
         if (url == null) {
             url = buildRailwayJdbcUrl();
@@ -64,6 +75,61 @@ public class DBConfig {
         }
 
         return new DatabaseSettings(url, username, password);
+    }
+
+    private static void loadDriver(String driverClassName) {
+        try {
+            Class.forName(driverClassName);
+        } catch (ClassNotFoundException e) {
+            // The app can run with either MySQL or PostgreSQL depending on deployment.
+        }
+    }
+
+    private static DatabaseUrl parseDatabaseUrl(String databaseUrl) {
+        if (isBlank(databaseUrl) || databaseUrl.startsWith("jdbc:")) {
+            return null;
+        }
+
+        try {
+            URI uri = new URI(databaseUrl);
+            String scheme = uri.getScheme();
+            if (!"postgres".equals(scheme) && !"postgresql".equals(scheme)) {
+                return null;
+            }
+
+            String host = uri.getHost();
+            String path = uri.getPath();
+            if (isBlank(host) || isBlank(path) || path.length() <= 1) {
+                return null;
+            }
+
+            int port = uri.getPort() == -1 ? 5432 : uri.getPort();
+            String query = uri.getQuery();
+            String jdbcUrl = "jdbc:postgresql://" + host + ":" + port + path;
+            if (isBlank(query)) {
+                jdbcUrl += "?sslmode=require";
+            } else {
+                jdbcUrl += "?" + query;
+                if (!query.toLowerCase().contains("sslmode=")) {
+                    jdbcUrl += "&sslmode=require";
+                }
+            }
+
+            String username = null;
+            String password = null;
+            String userInfo = uri.getUserInfo();
+            if (!isBlank(userInfo)) {
+                String[] parts = userInfo.split(":", 2);
+                username = decode(parts[0]);
+                if (parts.length > 1) {
+                    password = decode(parts[1]);
+                }
+            }
+
+            return new DatabaseUrl(jdbcUrl, username, password);
+        } catch (URISyntaxException e) {
+            return null;
+        }
     }
 
     private static String buildRailwayJdbcUrl() {
@@ -150,6 +216,18 @@ public class DBConfig {
         private final String password;
 
         private RailwayUrl(String jdbcUrl, String username, String password) {
+            this.jdbcUrl = jdbcUrl;
+            this.username = username;
+            this.password = password;
+        }
+    }
+
+    private static class DatabaseUrl {
+        private final String jdbcUrl;
+        private final String username;
+        private final String password;
+
+        private DatabaseUrl(String jdbcUrl, String username, String password) {
             this.jdbcUrl = jdbcUrl;
             this.username = username;
             this.password = password;
